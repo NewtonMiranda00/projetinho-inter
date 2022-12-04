@@ -24,10 +24,10 @@ def get_file(filename):  # pragma: no cover
         return str(exc)
 
 
-@ app.route('/', defaults={'path': ''}, methods=['POST', 'GET'])
-@ app.route('/<path:path>')
-@ app.route('/static/js/<path:path>')
-@ app.route('/static/css/<path:path>')
+@app.route('/', defaults={'path': ''}, methods=['POST', 'GET'])
+@app.route('/<path:path>')
+@app.route('/static/js/<path:path>')
+@app.route('/static/css/<path:path>')
 def App(path):
     print('Path - ', path)
     if request.method == 'GET':
