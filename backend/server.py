@@ -2,7 +2,7 @@ import pymysql
 import os
 
 
-class DataBase:
+class Database:
     def __init__(self):
         self.db = pymysql.connect(
             host=os.getenv('DATABASE_HOST'),
@@ -13,31 +13,31 @@ class DataBase:
 
         self.cursor = self.db.cursor()
 
-    def checar_versao(self):
+    def version(self):
         self.cursor.execute('SELECT VERSION()')
 
         data = self.cursor.fetchone()
 
-        print('Versão do banco de dados:', data)
-
         self.db.close()
 
-    def criar_tabela(self):
+        return data
+
+    def setup_database(self):
         sql = 'DROP TABLE IF EXISTS Historico'
         self.cursor.execute(sql)
 
         sql = '''CREATE TABLE Historico (
-            mano CHAR(20)
+            input CHAR(20)
         );'''
         self.cursor.execute(sql)
 
         self.db.close()
 
-    def inserir_na_tabela(self, a):
-        sql = f'''INSERT INTO Historico VALUES ("{a}")'''
+    def inserir_na_tabela(self, data):
+        sql = f'INSERT INTO Historico VALUES (%s)'
 
         try:
-            self.cursor.execute(sql)
+            self.cursor.execute(sql, data)
             self.db.commit()
         except BaseException:
             self.db.rollback()
