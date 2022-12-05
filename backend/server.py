@@ -27,17 +27,20 @@ class Database:
         self.cursor.execute(sql)
 
         sql = '''CREATE TABLE Historico (
-            input CHAR(20)
+            input1 CHAR(20),
+            input2 CHAR(20),
+            input3 CHAR(20),
+            input4 CHAR(20)
         );'''
         self.cursor.execute(sql)
 
         self.db.close()
 
-    def inserir_na_tabela(self, data):
-        sql = f'INSERT INTO Historico VALUES (%s)'
+    def insert_db(self, input1, input2, input3, input4):
+        sql = f'INSERT INTO Historico VALUES (%s, %s, %s, %s)'
 
         try:
-            self.cursor.execute(sql, data)
+            self.cursor.execute(sql, (input1, input2, input3, input4))
             self.db.commit()
         except BaseException:
             self.db.rollback()

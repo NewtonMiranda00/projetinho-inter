@@ -45,5 +45,20 @@ def App(path):
         return {'error': 'method is undefined'}
 
 
+@app.route('/sexo', methods=['GET'])
+def sexo():
+    # Database().setup_database()
+    return {'sexo': 'sexoo'}
+
+
+@app.route('/sexoo', methods=['POST'])
+def sexoo():
+    body = request.get_json()
+
+    Database().insert_db(body['input1'], body['input2'], body['input3'], body['input4'])
+
+    return body
+
+
 if __name__ == '__main__':
-    app.run(debug=true)
+    app.run(debug=True)
